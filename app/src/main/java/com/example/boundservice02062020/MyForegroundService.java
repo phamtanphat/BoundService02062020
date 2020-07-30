@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,10 +20,19 @@ public class MyForegroundService extends Service {
     String CHANNEL_ID = "mychannel_1";
     NotificationCompat.Builder mBuilder;
     int count = 0;
+    IBinder mIBinder;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        mIBinder = new MyBinder();
+        return mIBinder;
+    }
+
+    class MyBinder extends Binder{
+        MyForegroundService getService(){
+            return MyForegroundService.this;
+        }
     }
 
     @Override
@@ -48,7 +58,6 @@ public class MyForegroundService extends Service {
 
     private NotificationCompat.Builder createNotification(){
         Intent intent = new Intent(this , MainActivity.class);
-
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(
                         this,
