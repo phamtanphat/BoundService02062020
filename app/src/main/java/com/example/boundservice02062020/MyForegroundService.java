@@ -3,6 +3,7 @@ package com.example.boundservice02062020;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,15 @@ public class MyForegroundService extends Service {
     }
 
     private NotificationCompat.Builder createNotification(){
+        Intent intent = new Intent(this , MainActivity.class);
+
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        123 ,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this, CHANNEL_ID);
         builder.setContentTitle("Service running");
@@ -54,6 +64,7 @@ public class MyForegroundService extends Service {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setOngoing(false);
         builder.setShowWhen(true);
+        builder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
