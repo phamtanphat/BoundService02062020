@@ -52,7 +52,7 @@ public class MyForegroundService extends Service {
         builder.setContentText("Count " + count);
         builder.setStyle(new NotificationCompat.BigTextStyle());
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setOngoing(true);
+        builder.setOngoing(false);
         builder.setShowWhen(true);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
